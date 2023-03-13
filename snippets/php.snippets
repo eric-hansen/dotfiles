@@ -1,0 +1,78 @@
+snippet <?
+	<?php
+
+	${0:${VISUAL}}
+
+snippet ?f
+	<?php foreach ($${1:vars} as $${2:$var}): ?>
+		${0:${VISUAL}}
+	<?php endforeach ?>
+
+snippet ?i
+	<?php if ($${1:var}): ?>
+		${0:${VISUAL}}
+	<?php endif ?>
+
+snippet t.
+	\$this->
+
+snippet f
+	function ${1}(${3})
+	{
+		${0:${VISUAL}}
+	}
+
+snippet m
+	${1:protected} function ${2:foo}()
+	{
+		${0:${VISUAL}}
+	}
+
+snippet =?:
+	$${1:foo} = ${2:true} ? ${3:a} : ${0};
+
+snippet ?:
+	${1:true} ? ${2:a} : ${0}
+
+snippet /*
+	/**
+	 * ${0}
+	 */
+
+snippet trait
+	/**
+	 * ${2:undocumented class}
+	 *
+	 * @package ${3:default}
+	 * @author ${4:`g:snips_author`}
+	 */
+	trait ${1:`vim_snippets#Filename()`}
+	{
+		${0:${VISUAL}}
+	}
+
+snippet def "define('VARIABLE_NAME', 'definition')"
+	define('${1:VARIABLE_NAME}', ${2:'definition'});
+
+snippet if "if (condition) { ... }"
+	if (${1}) {
+		${0:${VISUAL}}
+	}
+snippet ifn "if (!condition) { ... }"
+	if (!${1}) {
+		${0:${VISUAL}}
+	}
+
+snippet vdd
+	var_dump(${1}); die(${0:});
+
+snippet pr
+	print_r(${0:${VISUAL}});
+
+snippet vlog "error_log(var_export($var, true));"
+	error_log(var_export(${1}, true));
+
+snippet log "error_log()"
+	error_log(${0:${VISUAL}})
+
+
