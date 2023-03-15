@@ -24,6 +24,7 @@ return {
         "typescript",
         "php",
         "vim",
+        "rust",
       },
     },
     ---@param opts TSConfig

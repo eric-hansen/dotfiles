@@ -156,7 +156,7 @@ return {
             -- },
             -- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { "filename", path = 3, symbols = { modified = "  ", readonly = "", unnamed = "" } },
-            { function () return require('lspsaga.symbolwinbar'):get_winbar() end },
+            { function () return require('lspsaga.symbolwinbar'):get_winbar() end, cond = function () return require('lspsaga.symbolwinbar'):get_winbar() ~= nil end },
             { 'lsp_progress', display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } }, 	spinner_symbols = { '🌑 ', '🌒 ', '🌓 ', '🌔 ', '🌕 ', '🌖 ', '🌗 ', '🌘 ' }, },
         -- stylua: ignore
         -- {

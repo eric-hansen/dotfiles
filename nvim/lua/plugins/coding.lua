@@ -2,7 +2,12 @@ return {
   {
     "numToStr/Comment.nvim",
   },
-
+    {
+        "simrat39/rust-tools.nvim",
+        opts = function ()
+            return {}
+        end,
+    },
     {
         "glepnir/lspsaga.nvim",
         event = "BufRead",
