@@ -89,14 +89,14 @@ function M.setup(opts)
   end
 
   -- autocmds and keymaps can wait to load
-  vim.api.nvim_create_autocmd("User", {
-    group = vim.api.nvim_create_augroup("LazyVim", { clear = true }),
-    pattern = "VeryLazy",
-    callback = function()
-      M.load("autocmds")
+--  vim.api.nvim_create_autocmd("User", {
+--    group = vim.api.nvim_create_augroup("LazyVim", { clear = true }),
+--    pattern = "VeryLazy",
+--    callback = function()
+      M.load("plugins.autocmds")
       M.load("keymaps")
-    end,
-  })
+--    end,
+--  })
 
   require("lazy.core.util").try(function()
     if type(M.colorscheme) == "function" then
@@ -123,19 +123,13 @@ end
 function M.load(name)
   local Util = require("lazy.core.util")
   -- always load lazyvim, then user file
-  for _, mod in ipairs({ "lazyvim.config." .. name, "config." .. name }) do
-    Util.try(function()
-      require(mod)
-    end, {
-      msg = "Failed loading " .. mod,
-      on_error = function(msg)
-        local modpath = require("lazy.core.cache").find(mod)
-        if modpath then
-          Util.error(msg)
-        end
-      end,
-    })
+  for _, mod in ipairs({ "lazyvim.config." .. name, "config." .. name, name }) do
+    local err, pkg = pcall(require, mod)
+
+    if not err then return end
   end
+
+  print('Unable to load module: ' .. name .. ': ' .. err)
 end
 
 setmetatable(M, {
