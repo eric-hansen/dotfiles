@@ -1,0 +1,59 @@
+[alias]
+# Branches
+  br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+  cb = !git br | grep '*' | awk '{print $2}'
+  del = branch -D
+  bsync = fetch --no-tags
+  cob = "!f() { SRC=\"${2:-$(git cb)}\" && echo \"Creating branch $1 from $SRC\" && git checkout $SRC && git pull && git checkout -b \"$1\" \"$SRC\"; }; f"
+  co = "!f() { git bsync && git checkout \"${1:-master}\" && git update; }; f"
+  update = !git bsync && git pull --no-tags --progress origin $(git cb)
+  resetter = "!f() { SRC="${2:-master-production}" && echo "Restoring $1 from $SRC" && git restore --staged --source="$SRC" --worktree "$1"; };f"
+  bs = "!f() { git br | grep --color=always \"$1\"; };f"
+
+# Tags
+  td = tag -d
+  tdr = "!f() { git push origin :refs/tags/$1; };f"
+
+# Commits
+  save = !git add -A && git commit -m 'chore: commit save point'
+  undo = reset HEAD~1 --mixed
+  res = !git reset --hard
+  done = !git push origin HEAD
+  really-done = !git push --force origin $(git cb)
+  pt = !git push --follow-tags origin HEAD
+  amend = commit --amend
+  unstage = 'reset HEAD --'
+  uncommit = 'reset --soft HEAD^'
+  s = status -sb
+  c = !convco commit -i
+  cc = !git c --chore
+  cd = !git c --docs
+  ci = !git c --ci
+  cf = !git c --feat
+  cfi = !git c --fix
+  cpe = !git c --perf
+  cr = !git c --refactor
+  cs = !git c --style
+  ct = !git c --test
+  cp = !git cherry-pick -s --allow-empty --allow-empty-message --rerere-autoupdate
+  cpm = !git cp -m
+
+# Checkout
+  mr = "!f() { MRID="$1" && SRC="${2:-origin}" && git fetch $SRC merge-requests/$MRID/head:mr-$SRC-$MRID && git checkout mr-$SRC-$MRID; };f"
+
+# Status
+
+# Misc.
+  l = !git log --pretty=format:\"%C(bold magenta)%h%Creset -%C(bold blue)%d%Creset %s %C(bold green)(%cr) [%an]\" --abbrev-commit -30
+  dad = !curl https://icanhazdadjoke.com/ && echo
+  sl = "log --graph --pretty=format:'commit: %C(bold red)%h%Creset %C(red)<%H>%Creset %C(bold magenta)%d %Creset%ndate: %C(bold yellow)%cd %Creset%C(yellow)%cr%Creset%nauthor: %C(bold blue)%an%Creset %C(blue)<%ae>%Creset%n%C(cyan)%s%n%Creset'"
+  me = "!git sl --author='Eric Hansen'"
+  search = "!f() { git rev-list --all | xargs git -c color.grep.linenumber=\"bold magenta\" -c color.grep.filename=\"bold green\" -c color.grep.match=\"bold blue\" grep --line-number --color=always --heading --break -F \"$1\"; };f"
+  v = version
+
+[user]
+	name = Eric Hansen
+[fetch]
+	prune = true
+[core]
+	excludesfile = $HOME/.gitignore
